@@ -7,7 +7,7 @@ O stack é composto por:
 * **Prometheus:** Um servidor de monitoramento configurado para "raspar" (scrape) as métricas expostas pela API.
 * **Grafana:** Um dashboard de visualização configurado para ler os dados do Prometheus e exibi-los em gráficos em tempo real.
 
-![Print do Dashboard do Grafana]([COLOQUE O LINK DO SEU PRINT AQUI])
+<img width="1920" height="913" alt="d0bdc519-adca-4933-bef8-905103f99cf3" src="https://github.com/user-attachments/assets/d7f58f1e-5954-41eb-b731-9c557acec4cd" />
 
 ---
 
