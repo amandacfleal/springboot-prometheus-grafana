@@ -1,0 +1,15 @@
+# Configuração global: com que frequência buscar métricas
+global:
+  scrape_interval: 15s # A cada 15 segundos
+
+# Lista de "alvos" (jobs) para buscar métricas
+scrape_configs:
+  - job_name: 'api-observabilidade' # O nome do nosso job
+    
+    # === AQUI ESTÁ A CORREÇÃO ===
+    # Dizendo ao Prometheus para buscar no caminho certo, e não no /metrics
+    metrics_path: /actuator/prometheus
+    
+    # O endereço onde o Prometheus vai encontrar nossa API
+    static_configs:
+      - targets: ['api-spring:8080']

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Serviço 1: Nossa API Spring Boot
+  api-spring:
+    build: . # "Construa a imagem usando o Dockerfile desta pasta"
+    container_name: api-observabilidade # Nome do container
+    ports:
+      - "8080:8080" # Mapeia a porta 8080 do host para a 8080 do container
+    networks:
+      - observabilidade-net
+
+  # Serviço 2: O Servidor Prometheus
+  prometheus:
+    image: prom/prometheus:latest # Usa a imagem oficial do Prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090" # Mapeia a porta 9090 (padrão do Prometheus)
+    volumes:
+      # Monta nosso arquivo de configuração (prometheus.yml)
+      # dentro do container do Prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - observabilidade-net
+
+  # Serviço 3: O Grafana
+  grafana:
+    image: grafana/grafana-oss:latest # Usa a imagem oficial do Grafana
+    container_name: grafana
+    ports:
+      - "3000:3000" # Mapeia a porta 3000 (padrão do Grafana)
+    depends_on:
+      - prometheus # Só inicia o Grafana DEPOIS que o Prometheus estiver pronto
+    networks:
+      - observabilidade-net
+
+# Define a rede "virtual" para que os containers possam
+# conversar entre si (ex: api-spring, prometheus)
+networks:
+  observabilidade-net:
+    driver: bridge
